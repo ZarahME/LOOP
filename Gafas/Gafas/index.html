@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Juego Geométrico VR</title>
+  <!-- Cargamos la librería de Realidad Virtual A-Frame -->
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+</head>
+<body>
+
+   <!-- Escena con niebla hiperdensa azul-verdosa marina (#02121e) -->
+  <a-scene fog="type: exponential; color: #02121e; density: 0.25">
+    
+    <!-- Fondo abisal turbio -->
+    <a-sky color="#02121e"></a-sky>
+
+    <!-- ILUMINACIÓN DE AGUA TURBIA -->
+    <a-light type="ambient" color="#032035"></a-light>
+    <a-light type="directional" color="#4cc9f0" intensity="0.5" position="0 10 -2"></a-light>
+
+    <!-- TRUCO VISUAL: EL FILTRO DE AGUA (Un domo gigante que te sumerge) -->
+    <a-sphere radius="30" color="#042942" opacity="0.35" material="side: double" wireframe="false"></a-sphere>
+
+    <!-- SUELO DEL FONDO MARINO -->
+    <a-plane position="0 -2 0" rotation="-90 0 0" width="100" height="100" color="#010b12" roughness="1"></a-plane>
+
+    <!-- PARTICULAS Y CORRIENTES FLOTANTES (Para dar sensación de movimiento fluido) -->
+    <!-- Grupo de burbujas 1 -->
+    
+      <a-sphere radius="0.05" color="#77cdff" opacity="0.6" animation="property: position; to: 0 8 0; loop: true; dur: 5000; easing: linear"></a-sphere>
+    
+    <!-- Grupo de burbujas 2 -->
+    
+      <a-sphere radius="0.03" color="#77cdff" opacity="0.5" animation="property: position; to: -0.5 7 0; loop: true; dur: 4000; easing: linear"></a-sphere>
+    
+    <!-- Sedimento marino flotando cerca -->
+    <a-sphere position="1 2 -1.5" radius="0.015" color="#ffffff" opacity="0.3"></a-sphere>
+    <a-sphere position="-1 1 -2" radius="0.02" color="#ffffff" opacity="0.2"></a-sphere>
+    <a-sphere position="0.5 2.5 -3" radius="0.01" color="#ffffff" opacity="0.4"></a-sphere>
+
+    <!-- JUGADOR E INTERFAZ HUD -->
+    
+      <a-cursor id="cursor-mira" color="#00f5d4"></a-cursor>
+
+      <!-- Marcadores digitales integrados en el casco del jugador -->
+      <a-text id="marcador-oxigeno" value="OXIGENO: 100%" color="#ff1a1a" position="-0.8 0.6 -1.5" width="2.3" font="mozillavr"></a-text>
+      <a-text id="marcador-puntos" value="PUNTOS: 0" color="#ffffff" position="0.3 0.6 -1.5" width="2.3" font="mozillavr"></a-text>
+    
+
+    <!-- Contenedor de juego para JavaScript -->
+    
+
+  </a-scene>
+
+  <script>
+    let oxigeno = 100;
+    let puntos = 0;
+    let juegoActivo = true;
+
+    const contenedor = document.getElementById('contenedor-objetos');
+    const textoOxigeno = document.getElementById('marcador-oxigeno');
+    const textoPuntos = document.getElementById('marcador-puntos');
+
+    // Consumo de oxígeno acelerado por la presión
+    const bucleOxigeno = setInterval(() => {
+      if (!juegoActivo) return;
+      oxigeno -= 3; 
+      if (oxigeno <= 0) { oxigeno = 0; terminarJuego(); }
+      actualizarInterfaz();
+    }, 1000);
+
+    // Generador de Bloques de Roblox flotando en el agua turbia
+    const generadorObjetos = setInterval(() => {
+      if (!juegoActivo) return;
+
+      const objeto = document.createElement('a-box');
+      const esBueno = Math.random() > 0.5; 
+      
+      // Aparecen en la cercanía del jugador para que la niebla no los tape por completo
+      const x = (Math.random() - 0.5) * 5;
+      const y = -2; 
+      const z = (Math.random() - 0.5) * 5 - 3;
+
+      objeto.setAttribute('position', `${x} ${y} ${z}`);
+      objeto.setAttribute('width', '0.4');
+      objeto.setAttribute('height', '0.4');
+      objeto.setAttribute('depth', '0.4');
+
+      if (esBueno) {
+        objeto.setAttribute('color', '#00b4d8'); // Oxígeno disuelto
+        objeto.setAttribute('class', 'bueno');
+      } else {
+        objeto.setAttribute('color', '#9e0059'); // Escombro oxidado peligroso
+        objeto.setAttribute('class', 'malo');
+      }
+
+      // Animación de flotado lento hacia la superficie
+      objeto.setAttribute('animation', {
+        property: 'position',
+        to: `${x} 6 ${z}`,
+        dur: 6000,
+        easing: 'linear'
+      });
+
+      objeto.setAttribute('animation__rot', {
+        property: 'rotation',
+        to: `${Math.random()*360} ${Math.random()*360} ${Math.random()*360}`,
+        dur: 6000,
+        easing: 'linear'
+      });
+
+      objeto.addEventListener('click', function() {
+        if (!juegoActivo) return;
+        if (this.getAttribute('class') === 'bueno') {
+          puntos += 10;
+          oxigeno = Math.min(100, oxigeno + 20);
+        } else {
+          oxigeno = Math.max(0, oxigeno - 25);
+        }
+        actualizarInterfaz();
+        this.parentNode.removeChild(this);
+      });
+
+      setTimeout(() => { if (objeto.parentNode) objeto.parentNode.removeChild(objeto); }, 6000);
+      contenedor.appendChild(objeto);
+    }, 1500);
+
+    function actualizarInterfaz() {
+      textoOxigeno.setAttribute('value', `OXIGENO: ${oxigeno}%`);
+      textoPuntos.setAttribute('value', `PUNTOS: ${puntos}`);
+    }
+
+    function terminarJuego() {
+      juegoActivo = false;
+      clearInterval(bucleOxigeno);
+      clearInterval(generadorObjetos);
+      contenedor.innerHTML = '';
+      textoOxigeno.setAttribute('value', 'AHOGADO');
+      textoPuntos.setAttribute('value', `PUNTOS: ${puntos}`);
+    }
+  </script>
+</body>
+</html>

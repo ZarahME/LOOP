@@ -1,0 +1,84 @@
+y asi como cajitas para agregarle elementos de terror en varias partes de el fondo
+
+
+
+
+html
+
+<!-- CAJITAS DE ELEMENTOS DE TERROR EN EL FONDO -->
+<div class="decoraciones-terror">
+  <!-- Caja 1: Esquina superior izquierda (atrás del título) -->
+  <div class="caja-terror pos-arriba-izquierda">
+    <img src="calavera.gif" alt="Elemento de terror">
+  </div>
+
+  <!-- Caja 2: Lateral derecho (por la zona de los niveles) -->
+  <div class="caja-terror pos-medio-derecha">
+    <img src="mancha-sangre.png" alt="Elemento de terror">
+  </div>
+
+  <!-- Caja 3: Esquina inferior izquierda (cerca del pie de página) -->
+  <div class="caja-terror pos-abajo-izquierda">
+    <img src="ojo-parpadeo.gif" alt="Elemento de terror">
+  </div>
+</div>
+
+
+
+
+css
+
+/* Contenedor general que agrupa todas las cajitas */
+.decoraciones-terror {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Se mantiene detrás de tus productos y botones */
+  pointer-events: none; /* Nadie puede hacerles clic por accidente */
+  overflow: hidden;
+}
+
+/* Estilo base para cada cajita decorativa */
+.caja-terror {
+  position: absolute;
+  width: 120px; /* Tamaño máximo de la cajita */
+  height: 120px;
+  opacity: 0.4; /* Sutiles para que no distraigan de la tienda; sube a 0.7 si quieres que destaquen más */
+  animation: flotacionFantasmal 6s ease-in-out infinite alternate; /* Animación de balanceo */
+}
+
+.caja-terror img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* UBICACIONES EXACTAS DE LAS CAJITAS */
+.pos-arriba-izquierda {
+  top: 15%;
+  left: 5%;
+}
+
+.pos-medio-derecha {
+  top: 50%;
+  right: 3%;
+  animation-delay: 1.5s; /* Desfasa la animación para que no se muevan al mismo tiempo */
+}
+
+.pos-abajo-izquierda {
+  top: 85%;
+  left: 8%;
+  animation-delay: 3s;
+}
+
+/* EFECTO DE ANIMACIÓN: Hace que las cajitas floten suavemente arriba y abajo */
+@keyframes flotacionFantasmal {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-15px) rotate(3deg); /* Sube 15px y gira un poco */
+  }
+}

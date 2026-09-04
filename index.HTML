@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOOP - Estudios de Videojuegos de Terror</title>
+  <link rel="stylesheet" href="css.CSS">
+
+  <style>
+    /* IMÁGENES DE LOS NIVELES */
+    .imagen-placeholder {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-radius: 8px;
+      background-color: #1a0f2b;
+      border: 1px solid #3b2455;
+    }
+
+    .imagen-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* ========================================= */
+    /* IA INTERACTIVA DE LOOP */
+    /* ========================================= */
+
+    .loop-ia {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      width: 350px;
+      max-width: calc(100vw - 30px);
+      background: #10091a;
+      border: 2px solid #bf55ec;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(191, 85, 236, 0.35);
+      z-index: 9999;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .ia-cabecera {
+      background: linear-gradient(135deg, #1e0d30, #0d0716);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #4a3765;
+    }
+
+    .ia-titulo {
+      color: #bf55ec;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .ia-estado {
+      color: #6dff91;
+      font-size: 12px;
+    }
+
+    .ia-mensajes {
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #0d0716;
+    }
+
+    .ia-mensaje {
+      margin-bottom: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 85%;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .ia-bot {
+      background: #1d1230;
+      color: #d9cbe8;
+      border-left: 3px solid #bf55ec;
+      margin-right: auto;
+    }
+
+    .ia-usuario {
+      background: #5b2075;
+      color: white;
+      margin-left: auto;
+    }
+
+    .ia-input-area {
+      display: flex;
+      padding: 10px;
+      gap: 8px;
+      background: #140d21;
+      border-top: 1px solid #3b2455;
+    }
+
+    .ia-input {
+      flex: 1;
+      padding: 10px;
+      background: #1e1430;
+      color: white;
+      border: 1px solid #4a3765;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .ia-input:focus {
+      border-color: #bf55ec;
+      box-shadow: 0 0 8px rgba(191, 85, 236, 0.3);
+    }
+
+    .ia-enviar {
+      padding: 10px 14px;
+      background: #bf55ec;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .ia-enviar:hover {
+      background: #d477f7;
+    }
+
+    .ia-boton-abrir {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: #bf55ec;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 26px;
+      box-shadow: 0 0 25px rgba(191, 85, 236, 0.6);
+      z-index: 9998;
+    }
+
+    .ia-boton-abrir:hover {
+      background: #d477f7;
+      transform: scale(1.05);
+    }
+
+    .ia-cerrar {
+      background: none;
+      border: none;
+      color: #a496ba;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .ia-cerrar:hover {
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .loop-ia {
+        right: 10px;
+        bottom: 10px;
+        width: calc(100vw - 20px);
+      }
+
+      .ia-boton-abrir {
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CABECERA Y MENÚ DE NAVEGACIÓN -->
+  <header class="sitio-header">
+    <nav class="menu-navegacion">
+
+      <a href="#inicio" class="logo">LOOP</a>
+
+      <div class="enlaces">
+        <a href="#inicio">Inicio</a>
+        <a href="#juego">El Juego</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#soporte">Soporte</a>
+        <a href="#" class="btn-carrito">🛒 Carrito (0)</a>
+      </div>
+
+    </nav>
+
+    <!-- EFECTO DE CHORREO DE SANGRE -->
+    <div class="sangre-borde"></div>
+  </header>
+
+
+  <!-- SECCIÓN HÉROE -->
+  <section id="inicio" class="seccion-heroe" style="padding-top: 140px;">
+
+    <div class="heroe-contenido">
+
+      <br>
+
+      <img src="222.png" alt="LOOP Logo" class="logo-principal">
+
+      <h1>CONSIGUE EL JUEGO COMPLETO Y CONTENIDO EXCLUSIVO</h1>
+
+      <p>
+        Terror, misterio y experiencias únicas en una sola plataforma.
+        Explora niveles malditos y personaliza tu identidad.
+      </p>
+
+      <a href="#tienda" class="btn-primario">
+        Explorar la Tienda
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECCIÓN EL JUEGO / LORE -->
+  <section
+    id="juego"
+    class="contenedor-tienda"
+    style="
+      background-color: #0d0716;
+      padding: 60px 20px;
+      border-radius: 8px;
+      margin-top: 40px;
+      border: 1px dashed #23123a;
+    "
+  >
+
+    <h2 class="titulo-categoria">
+      El Misterio de LOOP
+    </h2>
+
+    <div
+      style="
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      "
+    >
+
+      <div style="flex: 1; min-width: 280px;">
+
+        <p
+          style="
+            color: #a496ba;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+          "
+        >
+          Estás atrapado en una locación cambiante de bloques infinitos.
+          Cada rincón esconde una pista y cada pasillo te acerca a una
+          entidad que vigila tus movimientos en la oscuridad.
+        </p>
+
+        <p
+          style="
+            color: #bf55ec;
+            font-weight: bold;
+            font-size: 16px;
+            font-style: italic;
+          "
+        >
+          "Si te atrapa, el tiempo se reinicia. Usa tu vida anterior
+          para resolver los acertijos y romper el bucle."
+        </p>
+
+      </div>
+
+
+      <div
+        class="imagen-placeholder"
+        style="
+          flex: 1;
+          min-width: 280px;
+          height: 250px;
+          background-color: #1a0f2b;
+          color: #bf55ec;
+          border: 2px solid #bf55ec;
+        "
+      >
+        [ CAPTURA DEL JUEGO TIPO ROBLOX ]
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SECCIÓN DE TIENDA -->
+  <main id="tienda" class="contenedor-tienda">
+
+
+    <!-- ============================= -->
+    <!-- CATEGORÍA 1: NIVELES -->
+    <!-- ============================= -->
+
+    <h2 class="titulo-categoria">
+      Niveles y Expansiones
+    </h2>
+
+
+    <section class="cuadrícula-productos">
+
+
+      <div class="tarjeta-producto">
+
+        <div class="imagen-placeholder">
+          <img
+            src="nvl1.png"
+            alt="Imagen del Nivel 1 - El Origen"
+          >
+        </div>
+
+        <h3>
+          El Origen (Juego Base)
+        </h3>
+
+        <p>
+          Desbloquea el juego principal y los primeros misterios de LOOP.
+        </p>
+
+        <div class="precio-compra">
+
+          <span class="precio">
+            $9.99 USD
+          </span>
+
+          <button class="btn-comprar">
+            Comprar
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="tarjeta-producto">
+
+        <div class="imagen-placeholder">
+          <img src="image-1.png" alt="Imagen del Nivel 2 - Pasillos Vacíos">
+        </div>
+
+        <h3>
+          Capítulo II: Pasillos Vacíos
+        </h3>
+
+        <p>
+          Un nuevo set de niveles de terror psicológico extremo.
+        </p>
+
+        <div class="precio-compra">
+
+          <span class="precio">
+            $4.99 USD
+          </span>
+
+          <button class="btn-comprar">
+            Comprar
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <h2 class="titulo-categoria">
+      Avatars y Atuendos
+    </h2>
+
+
+    <section class="cuadrícula-productos">
+
+
+      <!-- AVATAR -->
+
+      <div class="tarjeta-producto">
+
+        <div class="imagen-placeholder">
+          <img
+            src="cap1.png"
+            alt="Avatar Sombra Ancestral"
+          >
+        </div>
+
+        <h3>
+          Avatar: Sombra Ancestral
+        </h3>
+
+        <p>
+          Modelo premium con ojos luminosos morados en el juego.
+        </p>
+
+        <div class="precio-compra">
+
+          <span class="precio">
+            $2.99 USD
+          </span>
+
+          <button class="btn-comprar">
+            Comprar
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ATUENDO -->
+
+      <div class="tarjeta-producto">
+
+        <div class="imagen-placeholder">
+          <img
+            src="cap2.png"
+            alt="Atuendo Capa del Vacío"
+          >
+        </div>
+
+        <h3>
+          Atuendo: Capa del Vacío
+        </h3>
+
+        <p>
+          Ropa exclusiva con partículas oscuras animadas.
+        </p>
+
+        <div class="precio-compra">
+
+          <span class="precio">
+            $1.50 USD
+          </span>
+
+          <button class="btn-comprar">
+            Comprar
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  </main>
+
+
+  <section
+    id="reportes"
+    class="contenedor-tienda"
+    style="margin-top: 60px;"
+  >
+
+    <h2 class="titulo-categoria">
+      Reportar Anomalía / Bug
+    </h2>
+
+
+    <form
+      style="
+        background-color: #140d21;
+        padding: 30px;
+        border-radius: 8px;
+        border: 1px solid #281b3f;
+        max-width: 600px;
+        margin: 20px auto 0 auto;
+      "
+    >
+
+      <div style="margin-bottom: 15px;">
+
+        <label
+          style="
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+          "
+        >
+          Usuario de Roblox / ID:
+        </label>
+
+        <input
+          type="text"
+          placeholder="Ej: TerrorPlayer123"
+          style="
+            width: 100%;
+            padding: 10px;
+            background-color: #1e1430;
+            border: 1px solid #4a3765;
+            border-radius: 4px;
+            color: #ffffff;
+          "
+        >
+
+      </div>
+
+
+      <div style="margin-bottom: 15px;">
+
+        <label
+          style="
+            display: block;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+          "
+        >
+          ¿Qué anomalía encontraste en el bucle?:
+        </label>
+
+        <textarea
+          rows="4"
+          placeholder="Describe el bug o error técnico aquí..."
+          style="
+            width: 100%;
+            padding: 10px;
+            background-color: #1e1430;
+            border: 1px solid #4a3765;
+            border-radius: 4px;
+            color: #ffffff;
+            resize: none;
+          "
+        ></textarea>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="btn-comprar"
+        style="
+          width: 100%;
+          padding: 12px;
+        "
+      >
+        Enviar Reporte
+      </button>
+
+    </form>
+
+  </section>
+
+
+  <footer id="soporte" class="pie-pagina">
+
+    <div class="columnas-pie">
+
+
+      <!-- LEGAL -->
+
+      <div class="columna">
+
+        <h3>
+          | LEGAL
+        </h3>
+
+        <a href="#">
+          Términos de Venta
+        </a>
+
+        <a href="#">
+          Política de Privacidad
+        </a>
+
+      </div>
+
+
+      <!-- COMUNIDAD -->
+
+      <div class="columna">
+
+        <h3>
+          | COMUNIDAD
+        </h3>
+
+        <a href="#">
+          Discord Oficial
+        </a>
+
+        <a href="#">
+          Soporte Técnico
+        </a>
+
+      </div>
+
+
+    </div>
+
+
+    <p class="copyright">
+      &copy; 2026 LOOP Enigmas de Videojuegos.
+      Todos los derechos reservados.
+    </p>
+
+  </footer>
+
+
+  <!-- ========================================== -->
+  <!-- IA INTERACTIVA LOOP -->
+  <!-- ========================================== -->
+
+  <button
+    class="ia-boton-abrir"
+    id="abrirIA"
+    title="Abrir IA de LOOP"
+  >
+    👁️
+  </button>
+
+
+  <div
+    class="loop-ia"
+    id="loopIA"
+    style="display: none;"
+  >
+
+    <div class="ia-cabecera">
+
+      <div>
+
+        <div class="ia-titulo">
+          👁️ LOOP IA
+        </div>
+
+        <div class="ia-estado">
+          ● Sistema activo
+        </div>
+
+      </div>
+
+      <button
+        class="ia-cerrar"
+        id="cerrarIA"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="ia-mensajes"
+      id="iaMensajes"
+    >
+
+      <div class="ia-mensaje ia-bot">
+        👁️ Bienvenido al sistema LOOP.
+        <br><br>
+        Soy la IA encargada de ayudarte a descubrir los secretos del juego.
+        Puedes preguntarme sobre los niveles, precios, avatares, lore o bugs.
+      </div>
+
+    </div>
+
+
+    <div class="ia-input-area">
+
+      <input
+        type="text"
+        id="iaInput"
+        class="ia-input"
+        placeholder="Escribe tu pregunta..."
+      >
+
+      <button
+        class="ia-enviar"
+        id="iaEnviar"
+      >
+        ➤
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT DE LA IA -->
+  <!-- ========================================== -->
+
+  <script>
+
+    const abrirIA = document.getElementById("abrirIA");
+    const cerrarIA = document.getElementById("cerrarIA");
+    const loopIA = document.getElementById("loopIA");
+    const iaInput = document.getElementById("iaInput");
+    const iaEnviar = document.getElementById("iaEnviar");
+    const iaMensajes = document.getElementById("iaMensajes");
+
+
+    /* ABRIR IA */
+
+    abrirIA.addEventListener("click", function() {
+
+      loopIA.style.display = "block";
+
+      abrirIA.style.display = "none";
+
+      iaInput.focus();
+
+    });
+
+
+    /* CERRAR IA */
+
+    cerrarIA.addEventListener("click", function() {
+
+      loopIA.style.display = "none";
+
+      abrirIA.style.display = "block";
+
+    });
+
+
+    /* AÑADIR MENSAJE */
+
+    function agregarMensaje(texto, tipo) {
+
+      const mensaje = document.createElement("div");
+
+      mensaje.classList.add("ia-mensaje");
+
+      if (tipo === "usuario") {
+
+        mensaje.classList.add("ia-usuario");
+
+      } else {
+
+        mensaje.classList.add("ia-bot");
+
+      }
+
+      mensaje.innerHTML = texto;
+
+      iaMensajes.appendChild(mensaje);
+
+      iaMensajes.scrollTop = iaMensajes.scrollHeight;
+
+    }
+
+
+    /* RESPUESTAS DE LA IA */
+
+    function responderIA(pregunta) {
+
+      const texto = pregunta.toLowerCase();
+
+
+      /* SALUDOS */
+
+      if (
+        texto.includes("hola") ||
+        texto.includes("buenas") ||
+        texto.includes("hey")
+      ) {
+
+        return "👁️ Hola, jugador. Bienvenido nuevamente al bucle. ¿Qué deseas descubrir?";
+
+      }
+
+
+      /* NIVEL 1 */
+
+      if (
+        texto.includes("nivel 1") ||
+        texto.includes("nivel uno") ||
+        texto.includes("origen")
+      ) {
+
+        return "🔴 <b>El Origen</b> es el juego base de LOOP. Su precio actual es <b>$9.99 USD</b>. Aquí comienzan los primeros misterios del bucle.";
+
+      }
+
+
+      /* NIVEL 2 */
+
+      if (
+        texto.includes("nivel 2") ||
+        texto.includes("nivel dos") ||
+        texto.includes("pasillos")
+      ) {
+
+        return "🟣 <b>Capítulo II: Pasillos Vacíos</b> añade nuevos niveles de terror psicológico. Su precio es <b>$4.99 USD</b>.";
+
+      }
+
+
+      /* PRECIO */
+
+      if (
+        texto.includes("precio") ||
+        texto.includes("precios") ||
+        texto.includes("cuesta") ||
+        texto.includes("cuánto")
+      ) {
+
+        return "💰 Estos son los precios actuales:<br><br>" +
+               "🔴 El Origen: <b>$9.99 USD</b><br>" +
+               "🟣 Pasillos Vacíos: <b>$4.99 USD</b><br>" +
+               "👤 Sombra Ancestral: <b>$2.99 USD</b><br>" +
+               "🧥 Capa del Vacío: <b>$1.50 USD</b>";
+
+      }
+
+
+      /* AVATAR */
+
+      if (
+        texto.includes("avatar") ||
+        texto.includes("sombra")
+      ) {
+
+        return "👤 El <b>Avatar: Sombra Ancestral</b> es un modelo premium con ojos luminosos morados. Su precio es <b>$2.99 USD</b>.";
+
+      }
+
+
+      /* ATUENDO */
+
+      if (
+        texto.includes("atuendo") ||
+        texto.includes("capa") ||
+        texto.includes("vacío")
+      ) {
+
+        return "🧥 La <b>Capa del Vacío</b> es un atuendo exclusivo con partículas oscuras animadas. Cuesta <b>$1.50 USD</b>.";
+
+      }
+
+
+      /* LORE */
+
+      if (
+        texto.includes("lore") ||
+        texto.includes("historia") ||
+        texto.includes("misterio")
+      ) {
+
+        return "👁️ Estás atrapado en una locación cambiante de bloques infinitos. Cada rincón esconde una pista y una entidad vigila tus movimientos. Si te atrapa, el tiempo se reinicia.";
+
+      }
+
+
+      /* LOOP */
+
+      if (
+        texto.includes("qué es loop") ||
+        texto.includes("que es loop") ||
+        texto.includes("juego")
+      ) {
+
+        return "🎮 <b>LOOP</b> es una experiencia de terror y misterio donde cada muerte reinicia el tiempo. Debes utilizar lo aprendido en cada ciclo para resolver los acertijos y escapar.";
+
+      }
+
+
+      /* BUG */
+
+      if (
+        texto.includes("bug") ||
+        texto.includes("error") ||
+        texto.includes("problema")
+      ) {
+
+        return "⚠️ Si encontraste una anomalía, puedes utilizar la sección <b>Reportar Anomalía / Bug</b> de la página para informar al equipo de LOOP.";
+
+      }
+
+
+      /* ROBLOX */
+
+      if (
+        texto.includes("roblox")
+      ) {
+
+        return "🎮 LOOP está diseñado con una experiencia inspirada en mundos de bloques. Explora, resuelve acertijos y sobrevive a las entidades.";
+
+      }
+
+
+      /* COMPRAR */
+
+      if (
+        texto.includes("comprar") ||
+        texto.includes("compra")
+      ) {
+
+        return "🛒 Puedes encontrar todos los productos disponibles en la sección <b>Tienda</b>. Selecciona el contenido que quieras adquirir.";
+
+      }
+
+
+      /* AYUDA */
+
+      if (
+        texto.includes("ayuda") ||
+        texto.includes("ayúdame") ||
+        texto.includes("ayudame")
+      ) {
+
+        return "👁️ Puedo ayudarte con:<br><br>" +
+               "🎮 Información del juego<br>" +
+               "🔴 Nivel 1<br>" +
+               "🟣 Nivel 2<br>" +
+               "👤 Avatares<br>" +
+               "🧥 Atuendos<br>" +
+               "💰 Precios<br>" +
+               "📖 Historia de LOOP<br>" +
+               "⚠️ Reportes de bugs";
+
+      }
+
+
+      /* RESPUESTA DESCONOCIDA */
+
+      return "👁️ Esa información todavía está oculta dentro del bucle... Intenta preguntarme por <b>niveles</b>, <b>precios</b>, <b>avatares</b>, <b>atuendos</b>, <b>historia</b> o <b>bugs</b>.";
+
+    }
+
+
+    /* ENVIAR MENSAJE */
+
+    function enviarMensaje() {
+
+      const pregunta = iaInput.value.trim();
+
+
+      if (pregunta === "") {
+
+        return;
+
+      }
+
+
+      /* MENSAJE DEL USUARIO */
+
+      agregarMensaje(
+        pregunta,
+        "usuario"
+      );
+
+
+      iaInput.value = "";
+
+
+      /* EFECTO DE PENSAMIENTO */
+
+      setTimeout(function() {
+
+        const respuesta = responderIA(pregunta);
+
+        agregarMensaje(
+          respuesta,
+          "bot"
+        );
+
+      }, 500);
+
+    }
+
+
+    /* BOTÓN ENVIAR */
+
+    iaEnviar.addEventListener(
+      "click",
+      enviarMensaje
+    );
+
+
+    /* ENTER PARA ENVIAR */
+
+    iaInput.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+
+          enviarMensaje();
+
+        }
+
+      }
+    );
+
+  </script>
+
+
+</body>
+</html>
