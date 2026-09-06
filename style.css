@@ -526,3 +526,101 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+
+
+/* ========================================= */
+/* ADAPTABILIDAD RESPONSIVE (MÓVILES Y TABLETS) */
+/* ========================================= */
+
+/* Ajustes para tablets y pantallas medianas (768px o menos) */
+@media (max-width: 768px) {
+  /* Menú de navegación */
+  .menu-navegacion {
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 20px;
+  }
+
+  .menu-navegacion .enlaces {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .menu-navegacion .enlaces a {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  /* Sección Héroe */
+  .seccion-heroe {
+    padding-top: 220px;
+    padding-bottom: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .seccion-heroe h1 {
+    font-size: 24px;
+  }
+
+  .seccion-heroe p {
+    font-size: 14px;
+  }
+
+  .logo-principal {
+    max-width: 220px;
+  }
+
+  /* Slider Promocional */
+  .contenedor-slider {
+    padding: 0 10px;
+    margin-top: 10px;
+  }
+
+  .slide img {
+    height: 250px; /* Reducción de altura para pantallas pequeñas */
+  }
+
+  /* Tarjetas de Productos */
+  .cuadrícula-productos {
+    grid-template-columns: 1fr; /* Una sola columna en celulares */
+    gap: 20px;
+  }
+
+  /* Modales y Formularios */
+  .contenido-carrito {
+    width: 95%;
+    padding: 18px;
+  }
+
+  #form-reporte {
+    padding: 20px 15px;
+  }
+}
+
+/* Ajustes para teléfonos pequeños (480px o menos) */
+@media (max-width: 480px) {
+  .menu-navegacion .logo {
+    font-size: 22px;
+  }
+
+  .menu-navegacion .enlaces a {
+    font-size: 12px;
+  }
+
+  .slide img {
+    height: 180px;
+  }
+
+  .sangre-borde {
+    height: 80px;
+    background-size: auto 80px;
+  }
+
+  .columnas-pie {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}
