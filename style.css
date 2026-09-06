@@ -529,98 +529,114 @@ body {
 
 
 /* ========================================= */
-/* ADAPTABILIDAD RESPONSIVE (MÓVILES Y TABLETS) */
+/* ADAPTABILIDAD RESPONSIVE MEJORADA (MÓVILES) */
 /* ========================================= */
 
-/* Ajustes para tablets y pantallas medianas (768px o menos) */
 @media (max-width: 768px) {
-  /* Menú de navegación */
-  .menu-navegacion {
-    flex-direction: column;
-    gap: 12px;
-    padding: 15px 20px;
+  /* Cabecera adaptables para evitar superposiciones */
+  .sitio-header {
+    position: relative; /* Cambia a relativo para que el contenido no quede oculto debajo */
   }
 
+  .menu-navegacion {
+    flex-direction: column;
+    padding: 12px 10px;
+    gap: 12px;
+  }
+
+  /* Distribución fluida para enlaces y botón del carrito */
   .menu-navegacion .enlaces {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 10px 15px;
+    width: 100%;
   }
 
   .menu-navegacion .enlaces a {
     margin-left: 0;
-    font-size: 14px;
+    font-size: 13px;
+    text-align: center;
   }
 
-  /* Sección Héroe */
+  .menu-navegacion .enlaces .btn-carrito {
+    width: 100%; /* El carrito ocupa ancho completo en móviles para mayor comodidad al tocar */
+    text-align: center;
+    padding: 10px;
+    margin-top: 5px;
+  }
+
+  /* Ajuste de espaciado inicial del héroe al cambiar la cabecera */
   .seccion-heroe {
-    padding-top: 220px;
-    padding-bottom: 60px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     padding-left: 15px;
     padding-right: 15px;
   }
 
-  .seccion-heroe h1 {
-    font-size: 24px;
-  }
-
-  .seccion-heroe p {
-    font-size: 14px;
-  }
-
   .logo-principal {
-    max-width: 220px;
+    max-width: 200px;
   }
 
-  /* Slider Promocional */
-  .contenedor-slider {
-    padding: 0 10px;
-    margin-top: 10px;
-  }
-
-  .slide img {
-    height: 250px; /* Reducción de altura para pantallas pequeñas */
-  }
-
-  /* Tarjetas de Productos */
-  .cuadrícula-productos {
-    grid-template-columns: 1fr; /* Una sola columna en celulares */
-    gap: 20px;
-  }
-
-  /* Modales y Formularios */
-  .contenido-carrito {
-    width: 95%;
-    padding: 18px;
-  }
-
-  #form-reporte {
-    padding: 20px 15px;
-  }
-}
-
-/* Ajustes para teléfonos pequeños (480px o menos) */
-@media (max-width: 480px) {
-  .menu-navegacion .logo {
+  .seccion-heroe h1 {
     font-size: 22px;
   }
 
+  /* Reducción de la imagen de sangre para evitar tapar contenido */
+  .sangre-borde {
+    height: 60px;
+    background-size: auto 60px;
+  }
+
+  /* Tarjetas de tienda a 1 columna */
+  .cuadrícula-productos {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  /* Ajuste de sección Soporte / Reportes en celular */
+  #reportes {
+    padding: 10px;
+    margin-top: 30px;
+  }
+
+  #form-reporte {
+    padding: 15px;
+    width: 100%;
+  }
+
+  /* Ajuste de ventanas emergentes (Modal del Carrito e IA) */
+  .contenido-carrito {
+    width: 95%;
+    max-height: 85vh;
+    padding: 15px;
+    overflow-y: auto;
+  }
+
+  .loop-ia {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+  }
+
+  .ia-boton-abrir {
+    right: 15px;
+    bottom: 15px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+/* Ajuste específico para pantallas ultra pequeñas (menores a 400px) */
+@media (max-width: 400px) {
   .menu-navegacion .enlaces a {
     font-size: 12px;
   }
 
-  .slide img {
-    height: 180px;
-  }
-
-  .sangre-borde {
-    height: 80px;
-    background-size: auto 80px;
-  }
-
-  .columnas-pie {
-    flex-direction: column;
+  .btn-primario, .btn-comprar {
+    width: 100%;
     text-align: center;
-    gap: 20px;
   }
 }
