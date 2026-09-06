@@ -1,0 +1,528 @@
+/* ========================================= */
+/* ESTILOS GENERALES Y CONFIGURACIÓN */
+/* ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0b0612;
+  color: #e5def2;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ========================================= */
+/* 1. MENÚ DE NAVEGACIÓN Y CHORREO DE SANGRE */
+/* ========================================= */
+.sitio-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.menu-navegacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background-color: rgba(11, 5, 18, 0.98);
+  border-bottom: 2px solid #3b2455;
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 2;
+}
+
+.menu-navegacion .logo {
+  color: #bf55ec;
+  font-size: 28px;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(191, 85, 236, 0.6);
+}
+
+.menu-navegacion .enlaces {
+  display: flex;
+  align-items: center;
+}
+
+.menu-navegacion .enlaces a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.menu-navegacion .enlaces a:hover {
+  color: #bf55ec;
+}
+
+.menu-navegacion .enlaces .btn-carrito {
+  background: #23123a;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #bf55ec;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(191, 85, 236, 0.3);
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.menu-navegacion .enlaces .btn-carrito:hover {
+  transform: scale(1.05);
+  background: #3b1d5e;
+}
+
+/* 1. CORRECCIÓN: LÍNEA DE SANGRE JUSTO DEBAJO DEL MENÚ SIN ESPACIOS */
+.sangre-borde {
+  width: 100%;
+  height: 120px;
+  background-image: url('2.0_sangrecopia-removebg-preview.png');
+  background-repeat: repeat-x;
+  background-size: auto 120px;
+  position: absolute;
+  top: 100%; /* Inicia inmediatamente abajo del menú */
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  margin-top: -2px; /* Ajuste milimétrico para sellar cualquier espacio */
+}
+
+/* ========================================= */
+/* SECCIÓN HÉROE */
+/* ========================================= */
+.seccion-heroe {
+  padding-top: 200px;
+  padding-bottom: 80px;
+  text-align: center;
+  background: linear-gradient(rgba(11, 5, 18, 0.7), #0b0612), url('baner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.logo-principal {
+  max-width: 320px;
+  width: 100%;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px rgba(191, 85, 236, 0.5));
+}
+
+.seccion-heroe h1 {
+  font-size: 32px;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.seccion-heroe p {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  font-size: 16px;
+  color: #a496ba;
+  line-height: 1.6;
+}
+
+.btn-primario {
+  display: inline-block;
+  padding: 12px 35px;
+  background-color: #bf55ec;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(191, 85, 236, 0.5);
+  transition: transform 0.2s, background 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primario:hover {
+  background-color: #9b30cc;
+  transform: translateY(-2px);
+}
+
+/* ========================================= */
+/* 3. SLIDER AUTOMÁTICO MÁS GRANDE Y LLAMATIVO */
+/* ========================================= */
+.contenedor-slider {
+  max-width: 1280px;
+  margin: 20px auto 50px auto;
+  padding: 0 20px;
+}
+
+.slider-promociones {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 3px solid #bf55ec;
+  box-shadow: 0 0 30px rgba(191, 85, 236, 0.6), inset 0 0 15px rgba(191, 85, 236, 0.4);
+}
+
+.slider-contenedor {
+  display: flex;
+  width: 300%;
+  animation: carrusel 12s infinite ease-in-out;
+}
+
+.slide {
+  width: 33.333%;
+}
+
+.slide img {
+  width: 100%;
+  height: 420px; /* Tamaño mucho más grande e impactante */
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes carrusel {
+  0% { transform: translateX(0%); }
+  30% { transform: translateX(0%); }
+  33% { transform: translateX(-33.333%); }
+  63% { transform: translateX(-33.333%); }
+  66% { transform: translateX(-66.666%); }
+  96% { transform: translateX(-66.666%); }
+  100% { transform: translateX(0%); }
+}
+
+/* ========================================= */
+/* TIENDA Y TARJETAS DE PRODUCTOS */
+/* ========================================= */
+.contenedor-tienda {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.titulo-categoria {
+  font-size: 24px;
+  margin: 40px 0 20px 0;
+  color: #ffffff;
+  border-left: 4px solid #bf55ec;
+  padding-left: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cuadrícula-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.tarjeta-producto {
+  background-color: #140d21;
+  border: 1px solid #281b3f;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.tarjeta-producto:hover {
+  transform: translateY(-5px);
+  border-color: #bf55ec;
+  box-shadow: 0 5px 20px rgba(191, 85, 236, 0.3);
+}
+
+.imagen-placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #1e1430;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #4a3765;
+  margin-bottom: 15px;
+  border: 1px solid #3b2455;
+}
+
+.imagen-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tarjeta-producto h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.tarjeta-producto p {
+  font-size: 14px;
+  color: #a496ba;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.precio-compra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.precio {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.btn-comprar {
+  padding: 8px 20px;
+  background-color: transparent;
+  border: 1px solid #bf55ec;
+  color: #bf55ec;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.btn-comprar:hover {
+  background-color: #bf55ec;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(191, 85, 236, 0.5);
+}
+
+/* ========================================= */
+/* 2. VENTANA EMERGENTE DEL CARRITO (MODAL) */
+/* ========================================= */
+.modal-carrito {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.contenido-carrito {
+  background: #140d21;
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid #bf55ec;
+  width: 90%;
+  max-width: 450px;
+  color: white;
+  box-shadow: 0 0 30px rgba(191, 85, 236, 0.5);
+}
+
+.contenido-carrito h2 {
+  border-bottom: 1px solid #3b2455;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #bf55ec;
+}
+
+.lista-items {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  padding-right: 5px;
+}
+
+.item-carrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #23123a;
+}
+
+.item-carrito button {
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* ========================================= */
+/* PIE DE PÁGINA */
+/* ========================================= */
+.pie-pagina {
+  background-color: #07030c;
+  padding: 50px 20px 20px 20px;
+  margin-top: 80px;
+  border-top: 1px solid #140d21;
+}
+
+.columnas-pie {
+  display: flex;
+  justify-content: space-around;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+}
+
+.columna h3 {
+  color: #bf55ec;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.columna a {
+  display: block;
+  color: #a496ba;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.columna a:hover {
+  color: #ffffff;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #4a3765;
+}
+
+/* ========================================= */
+/* IA INTERACTIVA DE LOOP */
+/* ========================================= */
+.loop-ia {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  width: 350px;
+  max-width: calc(100vw - 30px);
+  background: #10091a;
+  border: 2px solid #bf55ec;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(191, 85, 236, 0.35);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.ia-cabecera {
+  background: linear-gradient(135deg, #1e0d30, #0d0716);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #4a3765;
+}
+
+.ia-titulo {
+  color: #bf55ec;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.ia-estado {
+  color: #6dff91;
+  font-size: 12px;
+}
+
+.ia-mensajes {
+  height: 300px;
+  overflow-y: auto;
+  padding: 15px;
+  background: #0d0716;
+}
+
+.ia-mensaje {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 85%;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.ia-bot {
+  background: #1d1230;
+  color: #d9cbe8;
+  border-left: 3px solid #bf55ec;
+  margin-right: auto;
+}
+
+.ia-usuario {
+  background: #5b2075;
+  color: white;
+  margin-left: auto;
+}
+
+.ia-input-area {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  background: #140d21;
+  border-top: 1px solid #3b2455;
+}
+
+.ia-input {
+  flex: 1;
+  padding: 10px;
+  background: #1e1430;
+  color: white;
+  border: 1px solid #4a3765;
+  border-radius: 6px;
+  outline: none;
+}
+
+.ia-input:focus {
+  border-color: #bf55ec;
+}
+
+.ia-enviar {
+  padding: 10px 14px;
+  background: #bf55ec;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ia-boton-abrir {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: #bf55ec;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 26px;
+  box-shadow: 0 0 25px rgba(191, 85, 236, 0.6);
+  z-index: 9998;
+}
+
+.ia-cerrar {
+  background: none;
+  border: none;
+  color: #a496ba;
+  font-size: 20px;
+  cursor: pointer;
+}
